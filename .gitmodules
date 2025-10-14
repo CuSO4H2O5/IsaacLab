@@ -1,0 +1,3 @@
+[submodule "IsaacSim"]
+	path = IsaacSim
+	url = https://github.com/CuSO4H2O5/IsaacSim.git
