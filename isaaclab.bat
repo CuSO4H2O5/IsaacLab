@@ -19,6 +19,7 @@ set isaac_path=%ISAACLAB_PATH%\_isaac_sim
 rem Check if directory exists
 if not exist "%isaac_path%" (
     rem Find the Python executable
+    echo "test"
     call :extract_python_exe
     rem retrieve the isaacsim path from the installed package
     set "isaac_path="
@@ -49,10 +50,12 @@ set "PYTORCH_INDEX=https://download.pytorch.org/whl/%CUDA_TAG%"
 
 rem Do we already have torch?
 call "!python_exe!" -m pip show torch >nul 2>&1
+
 if errorlevel 1 (
     echo [INFO] Installing PyTorch !TORCH_VER! with CUDA !CUDA_TAG!...
     call "!python_exe!" -m pip install "torch==!TORCH_VER!" "torchvision==!TV_VER!" --index-url "!PYTORCH_INDEX!"
 ) else (
+    echo ('"!python_exe!" -m pip show torch ^| findstr /B /C:"Version:"')
     for /f "tokens=2" %%V in ('"!python_exe!" -m pip show torch ^| findstr /B /C:"Version:"') do set "TORCH_CUR=%%V"
     echo [INFO] Found PyTorch version !TORCH_CUR!.
     if /I not "!TORCH_CUR!"=="!TORCH_VER!+!CUDA_TAG!" (

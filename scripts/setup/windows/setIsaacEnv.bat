@@ -3,6 +3,22 @@ REM Isaac Sim root directory
 set "ISAAC_BUILD_DIR=_build\windows-x86_64\release"
 set "ISAACSIM_PATH=%ISAAC_SIM_DIR%\%ISAAC_BUILD_DIR%"
 
+echo Beginning setup...
+
+set REBUILD=0
+if "%*"=="" (
+    echo No arguments provided.
+) else (
+    for %%i in (%*) do (
+        if "%%i"=="--rb" set REBUILD=1
+        if "%%i"=="--rebuild" set REBUILD=1
+    )
+)
+if %REBUILD%==1 (
+    rd /s /q "%ISAACSIM_PATH%" 2>nul
+    echo "Isaac Sim build directory removed."
+)
+
 if not exist "%ISAACSIM_PATH%" (
     echo Error: Isaac Sim build directory not found at %ISAACSIM_PATH%
     echo Building...

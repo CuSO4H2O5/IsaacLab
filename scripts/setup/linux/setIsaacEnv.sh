@@ -2,6 +2,18 @@
 export ISAAC_BUILD_DIR="_build/linux-x86_64/release"
 export ISAACSIM_PATH="${ISAAC_SIM_DIR}/${ISAAC_BUILD_DIR}"
 
+echo "Beginning setup..."
+
+if [ $# -eq 0 ]; then
+    echo "No arguments provided."
+else
+    for arg in "$@"; do
+        if [ "$arg" = "--rb" ] || [ "$arg" = "--rebuild" ]; then
+            rm -rf "$ISAACSIM_PATH"
+            echo "Isaac Sim build directory removed."
+        fi
+    done
+fi
 
 if [ ! -d "$ISAACSIM_PATH" ]; then
     echo "Error: Isaac Sim build directory not found at $ISAACSIM_PATH"
